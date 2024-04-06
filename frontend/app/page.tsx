@@ -6,6 +6,14 @@ import AuctionForm from './components/AuctionForm';
 import ActiveReservations from './components/ActiveReservations';
 import { GpuCluster, Reservation } from './types'; 
 
+const exampleGpuCluster: GpuCluster = {
+  id: '1',
+  name: 'Example GPU Cluster',
+  gpuType: 'NVIDIA Tesla V100',
+  gpuCount: 4,
+  status: 'available',
+};
+
 export default function Home() {
   const [activeReservations, setActiveReservations] = useState<Reservation[]>([]);
   const handleAuctionSubmit = async (gpuCluster: GpuCluster) => {
@@ -30,13 +38,13 @@ export default function Home() {
     <Container className="py-4">
       <Row>
         <Col>
-          <h1 className="mb-4">GPU Auction</h1>
+          <h1 className="mb-4" style={{ fontSize: '2.5rem' }}>GPU Auction</h1>
         </Col>
       </Row>
       <Row>
         <Col md={8}>
           <h2>Available GPUs</h2>
-          <GPUGrid />
+          <GPUGrid gpuClusters={[exampleGpuCluster]} />
         </Col>
         <Col md={4}>
           <div className="bg-white rounded-xl shadow-md p-4">

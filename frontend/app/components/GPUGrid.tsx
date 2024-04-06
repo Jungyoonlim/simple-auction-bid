@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { GpuCluster } from '../types';
+
+interface Props {
+  gpuClusters: GpuCluster[];
+}
  
 const GPUGrid: React.FC = () => {
   const [gpuClusters, setGpuClusters] = useState<GpuCluster[]>([]);

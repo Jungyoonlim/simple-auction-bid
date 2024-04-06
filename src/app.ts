@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 app.get('/', (req, res) => {
     res.send('Welcome to the GPU Auction House!');

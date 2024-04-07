@@ -1,5 +1,5 @@
 import React, { useState } from 'react'; 
-import { GpuCluster } from  '../types';
+import { GpuCluster } from  '../types/index';
 
 interface Props {
     gpuClusterId: string; 

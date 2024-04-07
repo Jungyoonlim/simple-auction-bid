@@ -5,14 +5,21 @@ import GPUGrid from './components/GPUGrid';
 import AuctionForm from './components/AuctionForm';
 import ActiveReservations from './components/ActiveReservations';
 import { GpuCluster, Reservation } from './types'; 
+import { Inter } from 'next/font/google'; 
 
-const exampleGpuCluster: GpuCluster = {
+/**
+ * 
+ * For later: 
+ * const exampleGpuCluster: GpuCluster = {
   id: '1',
   name: 'Example GPU Cluster',
   gpuType: 'NVIDIA Tesla V100',
   gpuCount: 4,
   status: 'available',
 };
+ */
+
+const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const [activeReservations, setActiveReservations] = useState<Reservation[]>([]);

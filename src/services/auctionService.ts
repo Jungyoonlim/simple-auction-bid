@@ -45,3 +45,8 @@ export function closeAuction(id: string): void {
     }
 }
 
+export function getCurrentBid(id: string): number {
+    const auction = auctions.find((auction) => auction.id === id);
+    return auction ? auction.currentBid : 0;
+}
+

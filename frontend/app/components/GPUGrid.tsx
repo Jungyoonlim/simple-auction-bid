@@ -1,23 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { GpuCluster } from '../types';
+import AuctionForm from './AuctionForm'; 
 
 interface Props {
   gpuClusters: GpuCluster[];
+  onBidSubmit: (gpuClusterId: string, bidAmount: number) => void; 
 }
  
-const GPUGrid: React.FC = () => {
-  const [gpuClusters, setGpuClusters] = useState<GpuCluster[]>([]);
-  
-  useEffect(() => {
-    fetchGpuClusters();
-  }, []);
-
-  const fetchGpuClusters = async () => {
-    const response = await fetch('/api/gpuClusters');
-    const data = await response.json();
-    setGpuClusters(data);
-  };
-
+const GPUGrid: React.FC<Props> = ({ gpuClusters, onBidSubmit }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       {gpuClusters.map((gpu) => (
@@ -25,7 +15,9 @@ const GPUGrid: React.FC = () => {
           <h3 className="text-xl font-semibold">{gpu.name}</h3>
           <p>GPU Type: {gpu.gpuType}</p>
           <p>GPU Count: {gpu.gpuCount}</p>
+          <p>Current Highest Bid: ${gpu.currentBid}</p>
           <p>Status: {gpu.status}</p>
+          <AuctionForm gpuClusterId={gpu.id} onSubmit={onBidSubmit} />
         </div>
       ))}
     </div>

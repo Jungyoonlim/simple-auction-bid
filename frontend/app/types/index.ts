@@ -3,6 +3,7 @@ export interface GpuCluster {
     name: string;
     gpuType: string;
     gpuCount: number;
+    currentBid: number;
     startTime: Date;
     endTime: Date;
     duration: number;

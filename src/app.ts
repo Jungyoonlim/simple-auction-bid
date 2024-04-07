@@ -52,8 +52,12 @@ app.post('/auctions', (req, res) => {
   app.post('/auctions/:auctionId/bids', (req, res) => {
     const { auctionId } = req.params;
     const { bidAmount } = req.body;
-    placeBid(auctionId, bidAmount);
-    res.sendStatus(200);
+    try {
+      const updatedAuction = placeBid(auctionId, bidAmount);
+      res.json(updatedAuction); 
+    } catch (error: any){
+      res.status(400).json({ error: error.message });
+    }
   });
   
   app.post('/auctions/:auctionId/close', (req, res) => {

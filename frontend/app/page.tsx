@@ -4,10 +4,12 @@ import { Container, Row, Col } from 'react-bootstrap';
 import GPUGrid from './components/GPUGrid';
 import AuctionForm from './components/AuctionForm';
 import ActiveReservations from './components/ActiveReservations';
+import BidHistory from './components/BidHistory'; 
 import { GpuCluster, GpuHour, Reservation } from './types';
 import { sampleGpuClusters, sampleGpuHours } from '../../src/sampleData';
 
 export default function Home() {
+  // Declaring Sample GPU Clusters and Hours
   const [gpuClusters, setGpuClusters] = useState<GpuCluster[]>(sampleGpuClusters);
   const [gpuHours, setGpuHours] = useState<GpuHour[]>(sampleGpuHours);
   const [activeReservations, setActiveReservations] = useState<Reservation[]>([]);

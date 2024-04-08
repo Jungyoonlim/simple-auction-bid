@@ -1,13 +1,10 @@
 'use client';
-import { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import GPUGrid from './components/GPUGrid';
 import AuctionForm from './components/AuctionForm';
 import ActiveReservations from './components/ActiveReservations';
-import { GpuCluster, Reservation } from './types'; 
-import { Inter } from 'next/font/google'; 
-
-const inter = Inter({ subsets: ['latin'] })
+import { GpuCluster, Reservation } from './types';
 
 export default function Home() {
   const [gpuClusters, setGpuClusters] = useState<GpuCluster[]>([]);
@@ -30,43 +27,24 @@ export default function Home() {
     setActiveReservations(data);
   };
 
-  const handleAuctionSubmit = async (gpuCluster: GpuCluster) => {
-    const response = await fetch('/api/reservations', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(gpuCluster),
-    });
+  const handleBidSubmit = async (gpuClusterId: string, bidAmount: number) => {
+    try {
+      const response = await fetch('/api/bids', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ gpuClusterId, bidAmount }),
+      });
 
-    if (response.ok) {
-      const reservation = await response.json();
-      setActiveReservations([...activeReservations, reservation]);
-      alert('Auction submitted successfully!');
-    } else {
-      alert('Failed to submit auction. Please try again.');
-    }
-  };
-
-  const handleBidSubmit = async(gpuClusterId: string, bidAmount: number) => {
-    const response = await fetch(`/api/auctions/${gpuClusterId}/bids`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ bidAmount }),
-    });
-
-    if (response.ok) {
-      const updatedGpuCluster = await response.json();
-      setGpuClusters((prevClusters) =>
-        prevClusters.map((cluster) =>
-          cluster.id === updatedGpuCluster.id ? updatedGpuCluster : cluster
-        )
-      );
-      alert('Bid placed successfully!');
-    } else {
-      alert('Failed to place bid. Please try again.');
+      if (response.ok) {
+        // Refresh GPU clusters data after successful bid submission
+        fetchGpuClusters();
+      } else {
+        console.error('Error submitting bid:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error submitting bid:', error);
     }
   };
 
@@ -87,7 +65,7 @@ export default function Home() {
         <Col md={4}>
           <div className="bg-white rounded-xl shadow-md p-4">
             <h2>Place a Bid</h2>
-            <AuctionForm onSubmit={handleBidSubmit} gpuClusterId={/* provide the gpuClusterId here */} />
+            <AuctionForm onSubmit={handleBidSubmit} gpuClusterId={''} />
           </div>
         </Col>
       </Row>

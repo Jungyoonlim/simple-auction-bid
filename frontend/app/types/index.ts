@@ -27,3 +27,7 @@ export interface GpuCluster {
     gpuClusterId: string;
     bid: number | null;
   }
+
+  export interface Bid {
+    
+  }

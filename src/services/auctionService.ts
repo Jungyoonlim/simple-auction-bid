@@ -21,7 +21,7 @@ export function createAuction(reservationId: string, startTime: Date, endTime: D
     return auction;
 }
 
-export function placeBid(id: string, bidAmount: number): Auction {
+export default function placeBid(id: string, bidAmount: number): Auction {
     const auction = auctions.find((auction) => auction.id === id);
     if (!auction) {
         throw new Error('Auction not found');

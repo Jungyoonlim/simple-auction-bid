@@ -4,10 +4,12 @@ import { Container, Row, Col } from 'react-bootstrap';
 import GPUGrid from './components/GPUGrid';
 import AuctionForm from './components/AuctionForm';
 import ActiveReservations from './components/ActiveReservations';
-import { GpuCluster, Reservation } from './types';
+import { GpuCluster, GpuHour, Reservation } from './types';
+import { sampleGpuClusters, sampleGpuHours } from '../../src/sampleData';
 
 export default function Home() {
-  const [gpuClusters, setGpuClusters] = useState<GpuCluster[]>([]);
+  const [gpuClusters, setGpuClusters] = useState<GpuCluster[]>(sampleGpuClusters);
+  const [gpuHours, setGpuHours] = useState<GpuHour[]>(sampleGpuHours);
   const [activeReservations, setActiveReservations] = useState<Reservation[]>([]);
 
   useEffect(() => {
@@ -27,7 +29,7 @@ export default function Home() {
     setActiveReservations(data);
   };
 
-  const handleBidSubmit = async (gpuClusterId: string, bidAmount: number) => {
+  const handleBidSubmit = async (gpuClusterId: string, hourIndex: number, bidAmount: number) => {
     try {
       const response = await fetch('/api/bids', {
         method: 'POST',
@@ -66,7 +68,7 @@ return (
             (Select & bid on the latest models)
           </span>
         </h2>
-        <GPUGrid gpuClusters={gpuClusters} onBidSubmit={handleBidSubmit} />
+        <GPUGrid gpuClusters={gpuClusters} gpuHours={gpuHours} onBidSubmit={handleBidSubmit} />
       </div>
     </Col>
     <Col md={4}>

@@ -21,3 +21,9 @@ export interface GpuCluster {
     endTime: Date;
     status: string;
   }
+
+  export interface GpuHour {
+    hour: string;
+    gpuClusterId: string;
+    bid: number | null;
+  }

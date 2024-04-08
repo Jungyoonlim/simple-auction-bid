@@ -1,11 +1,13 @@
 import React, { useState } from 'react'; 
 import { GpuCluster } from  '../types/index';
 
+// Interface for the props that the AuctionForm component will receive
 interface Props {
     gpuClusterId: string; 
     onSubmit: (gpuCluster: string, bidAmount: number) => void;
   }
   
+  // React functional component that will render the form for placing a bid
   const AuctionForm: React.FC<Props> = ({ gpuClusterId, onSubmit }) => {
     const [bidAmount, setBidAmount] = useState(0);
   

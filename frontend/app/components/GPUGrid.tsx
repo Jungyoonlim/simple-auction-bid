@@ -1,23 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { GpuCluster } from '../types';
-import AuctionForm from './AuctionForm'; 
+import React from 'react';
+import { GpuCluster, GpuHour } from '../types';
+import AuctionForm from './AuctionForm';
 
 interface Props {
   gpuClusters: GpuCluster[];
-  onBidSubmit: (gpuClusterId: string, bidAmount: number) => void; 
+  gpuHours: GpuHour[];
+  onBidSubmit: (gpuClusterId: string, hourIndex: number, bidAmount: number) => void;
 }
- 
-const GPUGrid: React.FC<Props> = ({ gpuClusters, onBidSubmit }) => {
+
+const GPUGrid: React.FC<Props> = ({ gpuClusters, gpuHours, onBidSubmit }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      {gpuClusters.map((gpu) => (
-        <div key={gpu.id} className="bg-white rounded-xl shadow-md p-4">
-          <h3 className="text-xl font-semibold">{gpu.name}</h3>
-          <p>GPU Type: {gpu.gpuType}</p>
-          <p>GPU Count: {gpu.gpuCount}</p>
-          <p>Current Highest Bid: ${gpu.currentBid}</p>
-          <p>Status: {gpu.status}</p>
-          <AuctionForm gpuClusterId={gpu.id} onSubmit={onBidSubmit} />
+    <div>
+      {gpuClusters.map((cluster) => (
+        <div key={cluster.id}>
+          <h3>{cluster.name}</h3>
+          <p>GPU Type: {cluster.gpuType}</p>
+          <p>GPU Count: {cluster.gpuCount}</p>
+          <p>Current Bid: {cluster.currentBid}</p>
+          <p>Status: {cluster.status}</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Hour</th>
+                <th>Bid</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {gpuHours
+                .filter((hour) => hour.gpuClusterId === cluster.id)
+                .map((hour, index) => (
+                  <tr key={`${cluster.id}-${hour.hour}`}>
+                    <td>{hour.hour}</td>
+                    <td>{hour.bid ?? '-'}</td>
+                    <td>
+                      <AuctionForm
+                        gpuClusterId={cluster.id}
+                        hourIndex={index}
+                        onSubmit={onBidSubmit}
+                      />
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </div>
       ))}
     </div>

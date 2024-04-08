@@ -48,33 +48,53 @@ export default function Home() {
     }
   };
 
-  return (
-    <Container className="py-4">
-      <Row>
-        <Col>
-          <h1 className="mb-4" style={{ fontSize: '2.5rem' }}>
-            GPU Auction
-          </h1>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={8}>
-          <h2>Available GPUs</h2>
-          <GPUGrid gpuClusters={gpuClusters} onBidSubmit={handleBidSubmit} />
-        </Col>
-        <Col md={4}>
-          <div className="bg-white rounded-xl shadow-md p-4">
-            <h2>Place a Bid</h2>
-            <AuctionForm onSubmit={handleBidSubmit} gpuClusterId={''} />
-          </div>
-        </Col>
-      </Row>
-      <Row className="mt-4">
-        <Col>
-          <h2>Active Reservations</h2>
-          <ActiveReservations reservations={activeReservations} />
-        </Col>
-      </Row>
-    </Container>
+return (
+<Container className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+  <Row>
+    <Col>
+      <h1 className="text-4xl font-bold text-gray-800 mb-6 text-center font-montserrat">
+        GPU Auction
+      </h1>
+    </Col>
+  </Row>
+  <Row>
+    <Col md={8}>
+      <div className="bg-white rounded-xl shadow-2xl p-8 mb-6 border border-gray-100">
+        <h2 className="text-3xl font-semibold text-gray-800 mb-6 font-poppins">
+          Available GPUs
+          <span className="text-sm text-gray-500 font-normal ml-2">
+            (Select & bid on the latest models)
+          </span>
+        </h2>
+        <GPUGrid gpuClusters={gpuClusters} onBidSubmit={handleBidSubmit} />
+      </div>
+    </Col>
+    <Col md={4}>
+      <div className="bg-white rounded-xl shadow-2xl p-8 border border-gray-100">
+        <h2 className="text-3xl font-semibold text-gray-800 mb-6 font-poppins">
+          Place a Bid
+          <span className="text-sm text-gray-500 font-normal ml-2">
+            (Enter your best offer)
+          </span>
+        </h2>
+        <AuctionForm onSubmit={handleBidSubmit} gpuClusterId={''} />
+      </div>
+    </Col>
+  </Row>
+  <Row className="mt-8">
+    <Col>
+      <div className="bg-white rounded-xl shadow-2xl p-8 border border-gray-100">
+        <h2 className="text-3xl font-semibold text-gray-800 mb-6 font-poppins">
+          Active Reservations
+          <span className="text-sm text-gray-500 font-normal ml-2">
+            (View your GPU usage)
+          </span>
+        </h2>
+        <ActiveReservations reservations={activeReservations} />
+      </div>
+    </Col>
+  </Row>
+</Container>
+
   );
 }
